@@ -27,38 +27,38 @@
             <div th:if=${param.exito}>
                 <div class="alert alert-info">
                     Se ha registrado con exito a la aplicación
-                </div>
+                </div></div>
                 <h1>Registrate</h1>
                 <form th:action="@{/registro}" method="post" th:object="${usuario}">
                     <div class="form-group">
-                        <label class="form-control" for="nombre">Nombre :</label>
+                        <label class="control-label" for="nombre">Nombre :</label>
                         <input id="nombre" type="text" class="form-control" th:field="{nombre}" required autofocus="autofocus">
 
                     </div>
                     <div class="form-group">
-                        <label class="form-control" for="email">Email :</label>
+                        <label class="control-label" for="email">Email :</label>
                         <input id="email" type="email" class="form-control" th:field="{email}" required autofocus="autofocus">
 
                     </div>
                     <div class="form-group">
-                        <label class="form-control" for="apellido">Apellido :</label>
+                        <label class="control-label" for="apellido">Apellido :</label>
                         <input id="apellido" class="form-control" th:field="{apellido}" required autofocus="autofocus">
 
                     </div>
                     <div class="form-group">
-                        <label class="form-control" for="password">Password :</label>
-                        <input id="password" class="form-control" th:field="{password}" required autofocus="autofocus">
+                        <label class="control-label" for="password">Password :</label>
+                        <input type="password" id="password" class="form-control" th:field="{password}" required autofocus="autofocus">
 
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Registrar</button>
-                        <span>Si esta Registrado <a>
+                        <span>Si esta Registrado <a th:href="@{/login}">
                             Inicia sesión aqui
                         </a></span>
 
                     </div>
                 </form>
-            </div>
+
         </div>
     </div>
 </div>
