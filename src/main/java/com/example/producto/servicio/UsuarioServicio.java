@@ -7,5 +7,6 @@ public interface UsuarioServicio {
 
     public Usuario save(UsuarioRegistroDto registroDto);
 
-    UserDatails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

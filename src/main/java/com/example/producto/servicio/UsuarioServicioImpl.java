@@ -4,7 +4,6 @@ import com.example.producto.dto.UsuarioRegistroDto;
 import com.example.producto.modelo.Rol;
 import com.example.producto.modelo.Usuario;
 import com.example.producto.repositorio.UsuarioRepositorio;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -24,7 +23,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
        return usuarioRepositorio.save(usuario);
     }
     @Override
-    public UserDatails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         Usuario usuario = usuarioRepositorio.findByEmail(username);
         if (usuario == null){
             throw new UsernameNotFoundException("Usuario o password inválidos");
@@ -35,6 +34,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getNombre())).collect(Collectors.toList());
     }
+
 
 
 }
