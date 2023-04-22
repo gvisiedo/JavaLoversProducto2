@@ -4,15 +4,19 @@ import com.example.producto.dto.UsuarioRegistroDto;
 import com.example.producto.modelo.Rol;
 import com.example.producto.modelo.Usuario;
 import com.example.producto.repositorio.UsuarioRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServicioImpl implements UsuarioServicio {
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     private UsuarioRepositorio usuarioRepositorio;
     public UsuarioServicioImpl(UsuarioRepositorio usuarioRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
@@ -33,6 +37,11 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
     private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getNombre())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Usuario> listarUsuarios(){
+        return usuarioRepositorio.findAll();
     }
 
 
