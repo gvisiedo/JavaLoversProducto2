@@ -5,6 +5,12 @@ import com.example.producto.modelo.Rol;
 import com.example.producto.modelo.Usuario;
 import com.example.producto.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -27,7 +33,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
        return usuarioRepositorio.save(usuario);
     }
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepositorio.findByEmail(username);
         if (usuario == null){
             throw new UsernameNotFoundException("Usuario o password inválidos");
