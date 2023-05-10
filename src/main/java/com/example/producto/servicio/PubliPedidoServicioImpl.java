@@ -1,6 +1,7 @@
 package com.example.producto.servicio;
 
 import com.example.producto.dto.PubliPedidoDto;
+import com.example.producto.dto.PubliPedidoRespuesta;
 import com.example.producto.entidad.PubliPedido;
 import com.example.producto.excepciones.ResourceNotFoundException;
 import com.example.producto.repositorio.PubliPedidoRepo;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,11 +29,21 @@ public class PubliPedidoServicioImpl implements PubliPedidoServicio{
 
     }
     @Override
-    public List<PubliPedidoDto> obtenerTodosLosPubliPedidos(int numeroDePagina,int medidaPagina){
-        Pageable pageable = PageRequest.of(numeroDePagina, medidaPagina);
+    public PubliPedidoRespuesta obtenerTodosLosPubliPedidos(int numeroDePagina, int medidaPagina, String ordenarPor,String sortDir){
+        Sort sort= sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(ordenarPor).ascending():Sort.by(ordenarPor).descending();
+        Pageable pageable = PageRequest.of(numeroDePagina, medidaPagina, sort);
         Page<PubliPedido> publiPedidos = publiPedidoRepo.findAll(pageable);
         List<PubliPedido> listaDePubliPedidos = publiPedidos.getContent();
-       return listaDePubliPedidos.stream().map(publiPedido -> mapearDTO(publiPedido)).collect(Collectors.toList());
+        List<PubliPedidoDto> contenido = listaDePubliPedidos.stream().map(publiPedido -> mapearDTO(publiPedido)).collect(Collectors.toList());
+        PubliPedidoRespuesta publiPedidoRespuesta = new PubliPedidoRespuesta();
+        publiPedidoRespuesta.setContenido(contenido);
+        publiPedidoRespuesta.setNumeroPagina(publiPedidos.getNumber());
+        publiPedidoRespuesta.setMedidaPagina(publiPedidos.getSize());
+        publiPedidoRespuesta.setTotalElementos(publiPedidos.getTotalElements());
+        publiPedidoRespuesta.setTotalPaginas(publiPedidos.getTotalPages());
+        publiPedidoRespuesta.setUltimo(publiPedidos.isLast());
+        return publiPedidoRespuesta;
+
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.example.producto.entidad;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "Publipedido",uniqueConstraints = {@UniqueConstraint(columnNames = {"titulo"})})
 public class PubliPedido {
@@ -17,6 +20,8 @@ public class PubliPedido {
 
     @Column(name = "contenido",nullable = false)
     private String contenido;
+    @OneToMany(mappedBy = "publiPedido",cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Comentario> comentarios = new HashSet<>();
 
     public Long getId() {
         return id;

@@ -1,7 +1,9 @@
 package com.example.producto.controller;
 
 import com.example.producto.dto.PubliPedidoDto;
+import com.example.producto.dto.PubliPedidoRespuesta;
 import com.example.producto.servicio.PubliPedidoServicio;
+import com.example.producto.utilities.AppConstantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,8 @@ public class PubliPedidoController {
     private PubliPedidoServicio publiPedidoServicio;
 
     @GetMapping
-    public List<PubliPedidoDto> listarPubliPedido(@RequestParam(value = "pageNo", defaultValue = "0", required = false)int numeroDePagina,@RequestParam(value = "pageSize",defaultValue = "10",required = false)int medidaPagina){
-        return publiPedidoServicio.obtenerTodosLosPubliPedidos(numeroDePagina,medidaPagina);
+    public PubliPedidoRespuesta listarPubliPedido(@RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false)int numeroDePagina, @RequestParam(value = "pageSize",defaultValue = AppConstantes.MEDIDA_DE_PAGINA_POR_DEFECTO,required = false)int medidaPagina, @RequestParam(value = "sortBy",defaultValue = AppConstantes.ORDENAR_POR_DEFECTO,required = false)String ordenarPor, @RequestParam(value = "sortBy",defaultValue = AppConstantes.ORDENAR_DIRECCION_POR_DEFECTO,required = false)String sortDir){
+        return publiPedidoServicio.obtenerTodosLosPubliPedidos(numeroDePagina,medidaPagina,ordenarPor,sortDir);
     }
     @GetMapping("/{id}")
     public ResponseEntity<PubliPedidoDto> obtenerPubliPedidoPorId(@PathVariable(name = "id")long id){
