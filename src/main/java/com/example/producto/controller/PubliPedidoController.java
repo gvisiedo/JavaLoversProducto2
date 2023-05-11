@@ -18,7 +18,7 @@ public class PubliPedidoController {
     private PubliPedidoServicio publiPedidoServicio;
 
     @GetMapping
-    public PubliPedidoRespuesta listarPubliPedido(@RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false)int numeroDePagina, @RequestParam(value = "pageSize",defaultValue = AppConstantes.MEDIDA_DE_PAGINA_POR_DEFECTO,required = false)int medidaPagina, @RequestParam(value = "sortBy",defaultValue = AppConstantes.ORDENAR_POR_DEFECTO,required = false)String ordenarPor, @RequestParam(value = "sortBy",defaultValue = AppConstantes.ORDENAR_DIRECCION_POR_DEFECTO,required = false)String sortDir){
+    public PubliPedidoRespuesta listarPubliPedido(@RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false)int numeroDePagina, @RequestParam(value = "pageSize",defaultValue = AppConstantes.MEDIDA_DE_PAGINA_POR_DEFECTO,required = false)int medidaPagina, @RequestParam(value = "sortBy",defaultValue = AppConstantes.ORDENAR_POR_DEFECTO,required = false)String ordenarPor, @RequestParam(value = "sortDir",defaultValue = AppConstantes.ORDENAR_DIRECCION_POR_DEFECTO,required = false)String sortDir){
         return publiPedidoServicio.obtenerTodosLosPubliPedidos(numeroDePagina,medidaPagina,ordenarPor,sortDir);
     }
     @GetMapping("/{id}")

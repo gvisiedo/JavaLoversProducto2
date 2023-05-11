@@ -28,7 +28,7 @@ class SecurityConfiguration {
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
-    @Override
+   /* @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.authenticationProvider(authenticationProvider());
     }
@@ -49,5 +49,5 @@ class SecurityConfiguration {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
 
-    }
+    }*/
 }
