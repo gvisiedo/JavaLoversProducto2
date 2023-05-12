@@ -1,10 +1,19 @@
 package com.example.producto.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class ComentarioDto {
 
     private long id;
+    @NotEmpty(message = "El nombre no puede estar vacío")
     private String nombre;
+    @NotEmpty(message = "El email no debe ser vaío o nulo")
+    @Email
     private String email;
+    @NotEmpty
+    @Size(min = 10, message = "Debe tener al menos 10 caracteres" )
     private String cuerpo;
 
     public long getId() {

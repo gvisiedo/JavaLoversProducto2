@@ -4,6 +4,7 @@ import com.example.producto.dto.PubliPedidoDto;
 import com.example.producto.dto.PubliPedidoRespuesta;
 import com.example.producto.servicio.PubliPedidoServicio;
 import com.example.producto.utilities.AppConstantes;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,12 @@ public class PubliPedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PubliPedidoDto> guardarPubliPedido(@RequestBody PubliPedidoDto publiPedidoDto){
+    public ResponseEntity<PubliPedidoDto> guardarPubliPedido(@Valid @RequestBody PubliPedidoDto publiPedidoDto){
         return new ResponseEntity<>(publiPedidoServicio.crearPubliPedido(publiPedidoDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PubliPedidoDto> actualizarPubliPedidoPorId(@RequestBody PubliPedidoDto publiPedidoDto,@PathVariable(name = "id")long id){
+    public ResponseEntity<PubliPedidoDto> actualizarPubliPedidoPorId(@Valid @RequestBody PubliPedidoDto publiPedidoDto,@PathVariable(name = "id")long id){
         PubliPedidoDto publiPedidoRespuesta = publiPedidoServicio.actualizarPubliPedido(publiPedidoDto, id);
         return new ResponseEntity<>(publiPedidoRespuesta, HttpStatus.OK);
 

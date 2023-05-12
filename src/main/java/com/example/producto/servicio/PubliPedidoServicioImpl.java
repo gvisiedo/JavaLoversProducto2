@@ -5,6 +5,7 @@ import com.example.producto.dto.PubliPedidoRespuesta;
 import com.example.producto.entidad.PubliPedido;
 import com.example.producto.excepciones.ResourceNotFoundException;
 import com.example.producto.repositorio.PubliPedidoRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class PubliPedidoServicioImpl implements PubliPedidoServicio{
 
+    @Autowired
+    private ModelMapper modelMapper;
     @Autowired
     private PubliPedidoRepo publiPedidoRepo;
     @Override
@@ -72,20 +75,15 @@ public class PubliPedidoServicioImpl implements PubliPedidoServicio{
 
     //convierte entidad a DTO
     private PubliPedidoDto mapearDTO(PubliPedido publiPedido){
-        PubliPedidoDto publiPedidoDto = new PubliPedidoDto();
-        publiPedidoDto.setId(publiPedido.getId());
-        publiPedidoDto.setTitulo(publiPedido.getTitulo());
-        publiPedidoDto.setDescripcion(publiPedido.getDescripcion());
-        publiPedidoDto.setContenido(publiPedido.getContenido());
+        PubliPedidoDto publiPedidoDto = modelMapper.map(publiPedido, PubliPedidoDto.class);
+
         return publiPedidoDto;
     }
     //convierte de DTo a entidad
     private PubliPedido mapearEntidad(PubliPedidoDto publiPedidoDto){
-        PubliPedido publiPedido = new PubliPedido();
+        PubliPedido publiPedido = modelMapper.map(publiPedidoDto, PubliPedido.class);
 
-        publiPedido.setTitulo(publiPedidoDto.getTitulo());
-        publiPedido.setDescripcion(publiPedidoDto.getDescripcion());
-        publiPedido.setContenido(publiPedidoDto.getContenido());
+
         return publiPedido;
     }
 }

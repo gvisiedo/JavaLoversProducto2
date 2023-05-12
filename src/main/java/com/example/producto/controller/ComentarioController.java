@@ -3,13 +3,14 @@ package com.example.producto.controller;
 import com.example.producto.dto.ComentarioDto;
 import com.example.producto.entidad.Comentario;
 import com.example.producto.servicio.ComentarioServicio;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//2:40:29
+
 @RestController
 @RequestMapping("/api/")
 public class ComentarioController {
@@ -26,12 +27,12 @@ public class ComentarioController {
       return new ResponseEntity<ComentarioDto>(comentarioDto, HttpStatus.OK);
     }
     @PostMapping("/publicaciones/{publicacionId}/comentarios")
-    public ResponseEntity<ComentarioDto> guardarComentario(@PathVariable(value = "publicacionId")long publicacionId, @RequestBody ComentarioDto comentarioDto){
+    public ResponseEntity<ComentarioDto> guardarComentario(@PathVariable(value = "publicacionId")long publicacionId,@Valid @RequestBody ComentarioDto comentarioDto){
         return new ResponseEntity<>(comentarioServicio.crearComentario(publicacionId, comentarioDto), HttpStatus.CREATED);
 
     }
     @PutMapping("/publicaciones/{publicacionId}/comentarios/{id}")
-    public ResponseEntity<ComentarioDto> actualizarComentario(@PathVariable(value = "publicacionId")Long publicacionId,@PathVariable(value = "id")long comentarioId,@RequestBody ComentarioDto comentarioDto) {
+    public ResponseEntity<ComentarioDto> actualizarComentario(@PathVariable(value = "publicacionId")Long publicacionId,@PathVariable(value = "id")long comentarioId,@Valid @RequestBody ComentarioDto comentarioDto) {
         ComentarioDto comentarioActualizado = comentarioServicio.actualizarComentario(publicacionId, comentarioId, comentarioDto);
         return new ResponseEntity<>(comentarioActualizado, HttpStatus.OK);
 

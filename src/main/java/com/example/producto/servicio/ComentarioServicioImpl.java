@@ -7,6 +7,7 @@ import com.example.producto.excepciones.PubliPedidoAppException;
 import com.example.producto.excepciones.ResourceNotFoundException;
 import com.example.producto.repositorio.ComentarioRepositorio;
 import com.example.producto.repositorio.PubliPedidoRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class ComentarioServicioImpl implements ComentarioServicio{
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private ComentarioRepositorio comentarioRepositorio;
@@ -78,20 +81,12 @@ public class ComentarioServicioImpl implements ComentarioServicio{
 
 
     private ComentarioDto mapearDTO(Comentario comentario){
-        ComentarioDto comentarioDto = new ComentarioDto();
-        comentarioDto.setId(comentario.getId());
-        comentarioDto.setNombre(comentario.getNombre());
-        comentarioDto.setEmail(comentario.getEmail());
-        comentarioDto.setCuerpo(comentario.getCuerpo());
+        ComentarioDto comentarioDto = modelMapper.map(comentario, ComentarioDto.class);
 
         return comentarioDto;
     }
     private Comentario mapearEntidad(ComentarioDto comentarioDto){
-        Comentario comentario = new Comentario();
-        comentario.setId(comentarioDto.getId());
-        comentario.setNombre(comentarioDto.getNombre());
-        comentario.setEmail(comentarioDto.getEmail());
-        comentario.setCuerpo(comentarioDto.getCuerpo());
+        Comentario comentario = modelMapper.map(comentarioDto, Comentario.class);
         return comentario;
     }
 }
