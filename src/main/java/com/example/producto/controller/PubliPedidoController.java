@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,18 +28,19 @@ public class PubliPedidoController {
         return ResponseEntity.ok(publiPedidoServicio.obtenerPubliPedidoPorId(id));
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PubliPedidoDto> guardarPubliPedido(@Valid @RequestBody PubliPedidoDto publiPedidoDto){
         return new ResponseEntity<>(publiPedidoServicio.crearPubliPedido(publiPedidoDto), HttpStatus.CREATED);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PubliPedidoDto> actualizarPubliPedidoPorId(@Valid @RequestBody PubliPedidoDto publiPedidoDto,@PathVariable(name = "id")long id){
         PubliPedidoDto publiPedidoRespuesta = publiPedidoServicio.actualizarPubliPedido(publiPedidoDto, id);
         return new ResponseEntity<>(publiPedidoRespuesta, HttpStatus.OK);
 
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarPubliPedido(@PathVariable(name = "id")long id){
         publiPedidoServicio.eliminarPubliPedido(id);
