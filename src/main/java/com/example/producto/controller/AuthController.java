@@ -49,7 +49,7 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResonseDTO(token));
 
     }
-    @PostMapping("registrar")
+    @PostMapping("/registrar")
     public ResponseEntity<?> registrarUsuario(@RequestBody RegistroDto registroDto){
         if (usuarioRepo.existsByUsername(registroDto.getUsername())){
             return new ResponseEntity<>("Ese usuario ya existe", HttpStatus.BAD_REQUEST);
